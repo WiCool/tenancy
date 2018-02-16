@@ -1,8 +1,9 @@
 ![tenancy logo](https://avatars3.githubusercontent.com/u/33319474?s=50&v=4)
 
 This is the successor of [hyn/multi-tenant](https://github.com/hyn/multi-tenant). It is still
-in development. Feel free to start this project, follow progress via [twitter](https://twitter.com/laraveltenancy) and
-back its development using [OpenCollective](https://opencollective.com/tenancy).
+in development. Feel free to show support by starring the project
+following progress via [twitter](https://twitter.com/laraveltenancy) and
+backing its development over at [OpenCollective](https://opencollective.com/tenancy).
 
 # Roadmap 2018
 
