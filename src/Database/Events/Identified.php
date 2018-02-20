@@ -27,10 +27,15 @@ class Identified
      * @var ProvidesDatabaseDriver
      */
     public $provider;
+    /**
+     * @var string
+     */
+    public $connection;
 
-    public function __construct(IdentifiableAsTenant $tenant, ProvidesDatabaseDriver &$provider)
+    public function __construct(IdentifiableAsTenant $tenant, string $connection = null, ProvidesDatabaseDriver &$provider)
     {
         $this->tenant = $tenant;
         $this->provider = &$provider;
+        $this->connection = $connection;
     }
 }

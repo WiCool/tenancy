@@ -19,7 +19,7 @@ use Tenancy\Database\Contracts\ProvidesDatabaseDriver;
 use Tenancy\Database\Contracts\ResolvesConnections;
 use Tenancy\Identification\Contracts\IdentifiableAsTenant;
 
-class ConnectionResolver implements ResolvesConnections
+class DatabaseResolver implements ResolvesConnections
 {
     /**
      * @var Dispatcher
@@ -31,15 +31,15 @@ class ConnectionResolver implements ResolvesConnections
         $this->events = $events;
     }
 
-    public function __invoke(IdentifiableAsTenant $tenant): ?ProvidesDatabaseDriver
+    public function __invoke(IdentifiableAsTenant $tenant = null, string $connection = null): ?ProvidesDatabaseDriver
     {
-        $provider = $this->events->until(new Events\Resolving($tenant));
+        $provider = $this->events->until(new Events\Resolving($tenant, $connection));
 
         if ($provider) {
-            $this->events->dispatch(new Events\Identified($tenant, $provider));
+            $this->events->dispatch(new Events\Identified($tenant, $connection, $provider));
         }
 
-        $this->events->dispatch(new Events\Resolved($tenant, $provider));
+        $this->events->dispatch(new Events\Resolved($tenant, $connection, $provider));
 
         return $provider;
     }

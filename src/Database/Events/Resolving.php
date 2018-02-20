@@ -22,9 +22,14 @@ class Resolving
      * @var IdentifiableAsTenant
      */
     public $tenant;
+    /**
+     * @var string
+     */
+    public $connection;
 
-    public function __construct(IdentifiableAsTenant $tenant)
+    public function __construct(IdentifiableAsTenant $tenant, string $connection = null)
     {
         $this->tenant = $tenant;
+        $this->connection = $connection;
     }
 }

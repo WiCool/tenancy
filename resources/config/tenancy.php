@@ -23,6 +23,17 @@ return [
          *
          * @var bool
          */
-        'eager' => true,
+        'eager' => env('TENANCY_EAGER_IDENTIFICATION', true),
+    ],
+    'database' => [
+        /**
+         * The name of the tenant connection, tenancy will create this connection during runtime.
+         */
+        'tenant-connection-name' => env('TENANCY_TENANT_CONNECTION_NAME', 'tenant'),
+
+        /**
+         * Enabling this setting will force all Eloquent models to use the tenant connection by default.
+         */
+        'models-default-to-tenant-connection' => env('TENANCY_ELOQUENT_USES_TENANT_CONNECTION', false),
     ]
 ];

@@ -27,10 +27,15 @@ class Resolved
      * @var ProvidesDatabaseDriver
      */
     public $provider;
+    /**
+     * @var string
+     */
+    public $connection;
 
-    public function __construct(IdentifiableAsTenant $tenant, ProvidesDatabaseDriver &$provider = null)
+    public function __construct(IdentifiableAsTenant $tenant, string $connection = null, ProvidesDatabaseDriver &$provider = null)
     {
         $this->tenant = $tenant;
         $this->provider = &$provider;
+        $this->connection = $connection;
     }
 }
