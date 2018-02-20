@@ -22,7 +22,8 @@ class TenancyProvider extends ServiceProvider
     use Provides\ProvidesConfig,
         Provides\ProvidesMiddleware,
         Provides\ProvidesMigrations,
-        Provides\ProvidesServices;
+        Provides\ProvidesServices,
+        Provides\ProvidesEloquentConnections;
 
     protected $defer = true;
 
