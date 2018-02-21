@@ -14,7 +14,7 @@
 
 namespace Tenancy\Identification\Contracts;
 
-interface IdentifiableAsTenant
+interface Tenant
 {
     /**
      * The attribute of the Model to use for the key.

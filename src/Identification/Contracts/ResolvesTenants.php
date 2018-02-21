@@ -16,5 +16,5 @@ namespace Tenancy\Identification\Contracts;
 
 interface ResolvesTenants
 {
-    public function __invoke(): ?IdentifiableAsTenant;
+    public function __invoke(): ?Tenant;
 }

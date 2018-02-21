@@ -14,12 +14,12 @@
 
 namespace Tenancy\Database\Events;
 
-use Tenancy\Identification\Contracts\IdentifiableAsTenant;
+use Tenancy\Identification\Contracts\Tenant;
 
 class Resolving
 {
     /**
-     * @var IdentifiableAsTenant
+     * @var Tenant
      */
     public $tenant;
     /**
@@ -27,7 +27,7 @@ class Resolving
      */
     public $connection;
 
-    public function __construct(IdentifiableAsTenant $tenant, string $connection = null)
+    public function __construct(Tenant $tenant, string $connection = null)
     {
         $this->tenant = $tenant;
         $this->connection = $connection;

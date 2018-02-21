@@ -15,7 +15,7 @@
 namespace Tenancy\Identification;
 
 use Illuminate\Contracts\Events\Dispatcher;
-use Tenancy\Identification\Contracts\IdentifiableAsTenant;
+use Tenancy\Identification\Contracts\Tenant;
 use Tenancy\Identification\Contracts\ResolvesTenants;
 
 class TenantResolver implements ResolvesTenants
@@ -30,7 +30,7 @@ class TenantResolver implements ResolvesTenants
         $this->events = $events;
     }
 
-    public function __invoke(): ?IdentifiableAsTenant
+    public function __invoke(): ?Tenant
     {
         $tenant = $this->events->until(new Events\Resolving);
 

@@ -14,9 +14,9 @@
 
 namespace Tenancy\Database\Contracts;
 
-use Tenancy\Identification\Contracts\IdentifiableAsTenant;
+use Tenancy\Identification\Contracts\Tenant;
 
 interface ResolvesConnections
 {
-    public function __invoke(IdentifiableAsTenant $tenant): ?ProvidesDatabaseDriver;
+    public function __invoke(Tenant $tenant): ?ProvidesDatabaseDriver;
 }

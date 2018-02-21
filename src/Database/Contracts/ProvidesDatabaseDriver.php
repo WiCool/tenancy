@@ -15,8 +15,10 @@
 namespace Tenancy\Database\Contracts;
 
 use Illuminate\Database\ConnectionInterface;
+use Tenancy\Identification\Contracts\Tenant;
 
 interface ProvidesDatabaseDriver
 {
+    public function configure(Tenant $tenant);
     public function connection(): ConnectionInterface;
 }

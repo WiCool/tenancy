@@ -17,7 +17,7 @@ namespace Tenancy\Database;
 use Illuminate\Contracts\Events\Dispatcher;
 use Tenancy\Database\Contracts\ProvidesDatabaseDriver;
 use Tenancy\Database\Contracts\ResolvesConnections;
-use Tenancy\Identification\Contracts\IdentifiableAsTenant;
+use Tenancy\Identification\Contracts\Tenant;
 
 class DatabaseResolver implements ResolvesConnections
 {
@@ -31,7 +31,7 @@ class DatabaseResolver implements ResolvesConnections
         $this->events = $events;
     }
 
-    public function __invoke(IdentifiableAsTenant $tenant = null, string $connection = null): ?ProvidesDatabaseDriver
+    public function __invoke(Tenant $tenant = null, string $connection = null): ?ProvidesDatabaseDriver
     {
         $provider = $this->events->until(new Events\Resolving($tenant, $connection));
 

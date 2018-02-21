@@ -14,16 +14,16 @@
 
 namespace Tenancy\Identification\Events;
 
-use Tenancy\Identification\Contracts\IdentifiableAsTenant;
+use Tenancy\Identification\Contracts\Tenant;
 
 class Identified
 {
     /**
-     * @var IdentifiableAsTenant
+     * @var Tenant
      */
     public $tenant;
 
-    public function __construct(IdentifiableAsTenant $tenant)
+    public function __construct(Tenant $tenant)
     {
         $this->tenant = $tenant;
     }

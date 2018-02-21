@@ -15,13 +15,13 @@
 namespace Tenancy;
 
 use Illuminate\Contracts\Foundation\Application;
-use Tenancy\Identification\Contracts\IdentifiableAsTenant;
+use Tenancy\Identification\Contracts\Tenant;
 use Tenancy\Identification\Contracts\ResolvesTenants;
 
 class Environment
 {
     /**
-     * @var IdentifiableAsTenant
+     * @var Tenant
      */
     protected $tenant;
 
@@ -42,14 +42,14 @@ class Environment
         $this->app = $app;
     }
 
-    public function setTenant(IdentifiableAsTenant $tenant = null)
+    public function setTenant(Tenant $tenant = null)
     {
         $this->tenant = $tenant;
 
         return $this;
     }
 
-    public function getTenant(bool $refresh = false): ?IdentifiableAsTenant
+    public function getTenant(bool $refresh = false): ?Tenant
     {
         if (! $refresh || ! $this->identified) {
             $this->setTenant(

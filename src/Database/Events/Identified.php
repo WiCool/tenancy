@@ -15,12 +15,12 @@
 namespace Tenancy\Database\Events;
 
 use Tenancy\Database\Contracts\ProvidesDatabaseDriver;
-use Tenancy\Identification\Contracts\IdentifiableAsTenant;
+use Tenancy\Identification\Contracts\Tenant;
 
 class Identified
 {
     /**
-     * @var IdentifiableAsTenant
+     * @var Tenant
      */
     public $tenant;
     /**
@@ -32,7 +32,7 @@ class Identified
      */
     public $connection;
 
-    public function __construct(IdentifiableAsTenant $tenant, string $connection = null, ProvidesDatabaseDriver &$provider)
+    public function __construct(Tenant $tenant, string $connection = null, ProvidesDatabaseDriver &$provider)
     {
         $this->tenant = $tenant;
         $this->provider = &$provider;
