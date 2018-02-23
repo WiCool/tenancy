@@ -14,19 +14,17 @@
 
 namespace Tenancy\Identification\Events;
 
-use Tenancy\Identification\Support\TenantModelCollection;
+use Tenancy\Identification\Contracts\ResolvesTenants;
 
-class Resolving
+class Configuring
 {
     /**
-     * The tenant models.
-     *
-     * @var TenantModelCollection
+     * @var ResolvesTenants
      */
-    public $models;
+    public $resolver;
 
-    public function __construct(TenantModelCollection $models)
+    public function __construct(ResolvesTenants &$resolver)
     {
-        $this->models = $models;
+        $this->resolver = &$resolver;
     }
 }

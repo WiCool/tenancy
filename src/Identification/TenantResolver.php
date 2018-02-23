@@ -17,6 +17,7 @@ namespace Tenancy\Identification;
 use Illuminate\Contracts\Events\Dispatcher;
 use Tenancy\Identification\Contracts\Tenant;
 use Tenancy\Identification\Contracts\ResolvesTenants;
+use Tenancy\Identification\Support\TenantModelCollection;
 
 class TenantResolver implements ResolvesTenants
 {
@@ -25,14 +26,24 @@ class TenantResolver implements ResolvesTenants
      */
     protected $events;
 
+    /**
+     * The tenant models.
+     *
+     * @var TenantModelCollection
+     */
+    protected $models;
+
     public function __construct(Dispatcher $events)
     {
+        $this->models = new TenantModelCollection();
         $this->events = $events;
+
+        $this->configure();
     }
 
     public function __invoke(): ?Tenant
     {
-        $tenant = $this->events->until(new Events\Resolving);
+        $tenant = $this->events->until(new Events\Resolving($this->getModels()));
 
         if ($tenant) {
             $this->events->dispatch(new Events\Identified($tenant));
@@ -45,5 +56,25 @@ class TenantResolver implements ResolvesTenants
         $this->events->dispatch(new Events\Resolved($tenant));
 
         return $tenant;
+    }
+
+    protected function configure()
+    {
+        $this->events->dispatch(new Events\Configuring($this));
+    }
+
+    public function addModel(string $class)
+    {
+        if (! in_array(Tenant::class, class_implements($class))) {
+            throw new \InvalidArgumentException("$class has to implement ".Tenant::class);
+        }
+
+        $this->models->push($class);
+
+        return $this;
+    }
+    public function getModels(): TenantModelCollection
+    {
+        return $this->models;
     }
 }
