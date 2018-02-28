@@ -12,7 +12,7 @@
  * @see https://github.com/tenancy
  */
 
-namespace Tenancy\Tests\Unit\Concerns;
+namespace Tenancy\Tests\Unit\Identification\Concerns;
 
 use Illuminate\Database\Eloquent\Model;
 use ReflectionClass;
@@ -20,7 +20,7 @@ use Tenancy\Identification\Concerns\AllowsTenantIdentification;
 use Tenancy\Identification\Contracts\Tenant;
 use Tenancy\Tests\TestCase;
 
-class IdentifiableAsTenantTest extends TestCase
+class AllowTenantIdentificationTest extends TestCase
 {
     protected $class;
 

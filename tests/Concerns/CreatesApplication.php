@@ -15,6 +15,8 @@
 namespace Tenancy\Tests\Concerns;
 
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Database\Eloquent\Factory;
+use Tenancy\Providers\TenancyProvider;
 
 trait CreatesApplication
 {
@@ -51,6 +53,12 @@ trait CreatesApplication
         }
 
         $app->make(Kernel::class)->bootstrap();
+
+        /** @var Factory $factory */
+        $factory = $app->make(Factory::class);
+        $factory->load(__DIR__ . '/../database/factories/');
+
+        $app->register(TenancyProvider::class);
 
         return $app;
     }

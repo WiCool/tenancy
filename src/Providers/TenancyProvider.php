@@ -16,6 +16,8 @@ namespace Tenancy\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Tenancy\Environment;
+use Tenancy\Identification\Contracts\ResolvesTenants;
+use Tenancy\Identification\TenantResolver;
 
 class TenancyProvider extends ServiceProvider
 {
@@ -28,7 +30,8 @@ class TenancyProvider extends ServiceProvider
     protected $defer = true;
 
     public $singletons = [
-        Environment::class => Environment::class
+        Environment::class => Environment::class,
+        ResolvesTenants::class => TenantResolver::class
     ];
 
     public function register()

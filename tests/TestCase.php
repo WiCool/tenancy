@@ -14,11 +14,12 @@
 
 namespace Tenancy\Tests;
 
-use Illuminate\Foundation\Testing\TestCase as Test;
+use Illuminate\Foundation\Testing;
 
-class TestCase extends Test
+class TestCase extends Testing\TestCase
 {
-    use Concerns\CreatesApplication;
+    use Concerns\CreatesApplication,
+        Testing\RefreshDatabase;
 
     protected function afterSetUp()
     {
