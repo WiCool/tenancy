@@ -71,8 +71,6 @@ trait CreatesApplication
 
     protected function bootTenancy()
     {
-        $this->events = $this->app->make(Dispatcher::class);
-
         $this->app->register(TenancyProvider::class);
 
         /** @var Factory $factory */
@@ -80,11 +78,11 @@ trait CreatesApplication
         $factory->load(__DIR__ . '/../Mocks/factories/');
 
         $this->environment = $this->app->make(Environment::class);
+        $this->events = $this->app->make(Dispatcher::class);
     }
 
     protected function tearDownTenancy()
     {
-        dump(get_class($this), $this->firedEvents);
         // ..
     }
 }

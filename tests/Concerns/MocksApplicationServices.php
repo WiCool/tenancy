@@ -28,6 +28,12 @@ use Mockery;
 trait MocksApplicationServices
 {
     /**
+     * All of the fired events.
+     *
+     * @var array
+     */
+    protected $firedEvents = [];
+    /**
      * Mock the event dispatcher so all events are silenced and collected.
      *
      * @return $this
@@ -35,12 +41,13 @@ trait MocksApplicationServices
     protected function withoutEvents()
     {
         $mock = Mockery::mock(Dispatcher::class)->shouldIgnoreMissing();
-
+dump("-- before should receive: " . get_class($this));
         $mock->shouldReceive('fire', 'dispatch', 'until')->andReturnUsing(function ($called) {
             $this->firedEvents[] = $called;
+            dump("-- return should receive: " . get_class($this) . " (event: ".get_class($called).")");
         });
 
-        $this->app->instance('events', $mock);
+        $this->swap('events', $mock);
 
         return $this;
     }

@@ -34,7 +34,7 @@ class AllowTenantIdentificationTest extends TestCase
     /**
      * @test
      */
-    public function has_required_methods()
+    function has_required_methods()
     {
         $has = collect((new ReflectionClass($this->class))->getMethods())->pluck('name');
         $needs = collect((new ReflectionClass(Tenant::class))->getMethods())->pluck('name');

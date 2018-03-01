@@ -22,7 +22,7 @@ class ConfiguringTest extends TestCase
     /**
      * @test
      */
-    public function dispatches_event()
+    function dispatches_event()
     {
         $this->expectsEvents(Configuring::class);
 

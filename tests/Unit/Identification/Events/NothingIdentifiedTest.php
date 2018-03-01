@@ -22,7 +22,7 @@ class NothingIdentifiedTest extends TestCase
     /**
      * @test
      */
-    public function dispatches_event()
+    function dispatches_event()
     {
         $this->expectsEvents(NothingIdentified::class);
 
