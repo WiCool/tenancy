@@ -23,7 +23,7 @@ class EagerIdentificationTest extends TestCase
     /**
      * @test
      */
-    function is_eagerly_identifying_tenant()
+    public function is_eagerly_identifying_tenant()
     {
         $this->assertFalse($this->environment->isIdentified());
 
