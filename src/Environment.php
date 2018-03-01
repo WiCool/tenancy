@@ -53,7 +53,7 @@ class Environment
     {
         if (! $refresh || ! $this->identified) {
             $this->setTenant(
-                $this->app->call(static::getIdentificationResolver())
+                static::getIdentificationResolver()->__invoke()
             );
 
             $this->identified = true;

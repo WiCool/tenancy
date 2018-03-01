@@ -15,11 +15,23 @@
 namespace Tenancy\Tests\Concerns;
 
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Eloquent\Factory;
+use Tenancy\Environment;
 use Tenancy\Providers\TenancyProvider;
 
 trait CreatesApplication
 {
+    /**
+     * @var Environment
+     */
+    protected $environment;
+
+    /**
+     * @var Dispatcher
+     */
+    protected $events;
+
     /**
      * Creates the application.
      *
@@ -54,12 +66,25 @@ trait CreatesApplication
 
         $app->make(Kernel::class)->bootstrap();
 
-        /** @var Factory $factory */
-        $factory = $app->make(Factory::class);
-        $factory->load(__DIR__ . '/../database/factories/');
-
-        $app->register(TenancyProvider::class);
-
         return $app;
+    }
+
+    protected function bootTenancy()
+    {
+        $this->events = $this->app->make(Dispatcher::class);
+
+        $this->app->register(TenancyProvider::class);
+
+        /** @var Factory $factory */
+        $factory = $this->app->make(Factory::class);
+        $factory->load(__DIR__ . '/../Mocks/factories/');
+
+        $this->environment = $this->app->make(Environment::class);
+    }
+
+    protected function tearDownTenancy()
+    {
+        dump(get_class($this), $this->firedEvents);
+        // ..
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
-use Tenancy\Tests\Models\Tenant;
+use Tenancy\Tests\Mocks\Tenant;
 
 /*
 |--------------------------------------------------------------------------

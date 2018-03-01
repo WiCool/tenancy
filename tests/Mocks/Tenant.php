@@ -1,6 +1,6 @@
 <?php
 
-namespace Tenancy\Tests\Models;
+namespace Tenancy\Tests\Mocks;
 
 use Illuminate\Database\Eloquent\Model;
 use Tenancy\Identification\Concerns\AllowsTenantIdentification;

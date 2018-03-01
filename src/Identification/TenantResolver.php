@@ -73,8 +73,22 @@ class TenantResolver implements ResolvesTenants
 
         return $this;
     }
+
     public function getModels(): TenantModelCollection
     {
         return $this->models;
+    }
+
+    /**
+     * Updates the tenant model collection.
+     *
+     * @param TenantModelCollection $collection
+     * @return $this
+     */
+    public function setModels(TenantModelCollection $collection)
+    {
+        $this->models = $collection;
+
+        return $this;
     }
 }

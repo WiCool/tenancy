@@ -19,6 +19,7 @@ use Illuminate\Foundation\Testing;
 class TestCase extends Testing\TestCase
 {
     use Concerns\CreatesApplication,
+        Concerns\MocksApplicationServices,
         Testing\RefreshDatabase;
 
     protected function afterSetUp()
@@ -35,12 +36,14 @@ class TestCase extends Testing\TestCase
     {
         parent::setUp();
 
+        $this->bootTenancy();
         $this->afterSetUp();
     }
 
     protected function tearDown()
     {
         $this->beforeTearDown();
+        $this->tearDownTenancy();
 
         parent::tearDown();
     }
