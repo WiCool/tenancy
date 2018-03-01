@@ -41,7 +41,7 @@ class TenantResolverTest extends TestCase
     /**
      * @test
      */
-    function can_resolve_a_tenant()
+    public function can_resolve_a_tenant()
     {
         $this->events->listen(Resolving::class, function (Resolving $event) {
             return $this->tenant;
@@ -57,7 +57,7 @@ class TenantResolverTest extends TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    function fails_registering_invalid_model()
+    public function fails_registering_invalid_model()
     {
         $this->resolver->addModel(User::class);
     }
@@ -65,7 +65,7 @@ class TenantResolverTest extends TestCase
     /**
      * @test
      */
-    function allows_providers_to_match_models()
+    public function allows_providers_to_match_models()
     {
         $this->events->listen(Resolving::class, function (Resolving $event) {
             $event->models->each(function (string $class) {
