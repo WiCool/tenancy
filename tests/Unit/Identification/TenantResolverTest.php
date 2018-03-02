@@ -35,7 +35,7 @@ class TenantResolverTest extends TestCase
     protected function afterSetUp()
     {
         $this->resolver = $this->app->make(ResolvesTenants::class);
-        $this->tenant = factory(Tenant::class)->create();
+        $this->tenant = $this->tenant();
     }
 
     /**

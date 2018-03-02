@@ -14,15 +14,19 @@
 
 namespace Tenancy\Providers\Provides;
 
-use Illuminate\Database\ConnectionResolverInterface;
+use Illuminate\Database\Eloquent\Model;
 use Tenancy\Eloquent\ConnectionResolver;
 
 trait ProvidesEloquentConnections
 {
     protected function bootProvidesEloquentConnections()
     {
-        $this->app->extend(ConnectionResolverInterface::class, function ($resolver) {
-            return $this->app->makeWith(ConnectionResolver::class, compact('resolver'));
+        $this->app->extend('db', function ($resolver) {
+            $resolver = $this->app->makeWith(ConnectionResolver::class, compact('resolver'));
+
+            Model::setConnectionResolver($resolver);
+
+            return $resolver;
         });
     }
 }

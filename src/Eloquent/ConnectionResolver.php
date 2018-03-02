@@ -20,7 +20,6 @@ use Tenancy\Environment;
 
 class ConnectionResolver implements ConnectionResolverInterface
 {
-
     /**
      * @var Environment
      */
@@ -65,6 +64,10 @@ class ConnectionResolver implements ConnectionResolverInterface
      */
     public function getDefaultConnection()
     {
+        if (config('tenancy.database.models-default-to-tenant-connection')) {
+            return config('tenancy.database.tenant-connection-name');
+        }
+
         return $this->resolver->getDefaultConnection();
     }
 
