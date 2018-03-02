@@ -41,10 +41,9 @@ trait MocksApplicationServices
     protected function withoutEvents()
     {
         $mock = Mockery::mock(Dispatcher::class)->shouldIgnoreMissing();
-        dump("-- before should receive: " . get_class($this));
+
         $mock->shouldReceive('fire', 'dispatch', 'until')->andReturnUsing(function ($called) {
             $this->firedEvents[] = $called;
-            dump("-- return should receive: " . get_class($this) . " (event: ".get_class($called).")");
         });
 
         $this->swap('events', $mock);
