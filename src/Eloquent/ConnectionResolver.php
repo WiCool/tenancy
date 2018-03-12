@@ -61,7 +61,6 @@ class ConnectionResolver implements ConnectionResolverInterface
             $tenant = $this->environment->getTenant() &&
             config("database.connections.$name.uuid") !== $tenant->getTenantKey() &&
             $provider = $this->manager->__invoke($tenant, $name)) {
-
             $configuration = $provider->configure($tenant);
 
             Arr::set($configuration, 'uuid', $tenant->getTenantKey());
