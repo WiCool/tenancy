@@ -48,8 +48,14 @@ class ConnectionResolver implements ConnectionResolverInterface
      */
     public function connection($name = null)
     {
-        if ($name === config('tenancy.database.tenant-connection-name')) {
-            $provider = $this->manager->__invoke($this->environment->getTenant(), $name);
+        /** @var $tenant \Tenancy\Identification\Contracts\Tenant */
+        if ($name === config('tenancy.database.tenant-connection-name') &&
+            $tenant = $this->environment->getTenant() &&
+            // Only invoke the database manager to (re-) create the connection.
+            // Otherwise just allow a pass through.
+            config("database.connections.$name.uuid") !== $tenant->getTenantKey()) {
+
+            $provider = $this->manager->__invoke($tenant, $name);
 
             return $provider->connection();
         }
