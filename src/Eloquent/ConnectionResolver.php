@@ -61,7 +61,6 @@ class ConnectionResolver implements ConnectionResolverInterface
             // Only invoke the database manager to (re-) create the connection.
             // Otherwise just allow a pass through.
             config("database.connections.$name.uuid") !== $tenant->getTenantKey()) {
-
             $provider = $this->manager->__invoke($tenant, $name);
 
             $configuration = $provider->configure($tenant);
