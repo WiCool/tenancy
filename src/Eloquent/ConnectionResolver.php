@@ -16,6 +16,7 @@ namespace Tenancy\Eloquent;
 
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\ConnectionResolverInterface;
+use Illuminate\Support\Arr;
 use Tenancy\Database\DatabaseResolver;
 use Tenancy\Database\Events\Drivers\Configuring;
 use Tenancy\Environment;
@@ -41,10 +42,10 @@ class ConnectionResolver implements ConnectionResolverInterface
 
     public function __construct(DatabaseResolver $manager, Environment $environment, $resolver, Dispatcher $events)
     {
-        $this->manager = $manager;
+        $this->manager     = $manager;
         $this->environment = $environment;
-        $this->resolver = $resolver;
-        $this->events = $events;
+        $this->resolver    = $resolver;
+        $this->events      = $events;
     }
 
     /**
@@ -58,20 +59,16 @@ class ConnectionResolver implements ConnectionResolverInterface
         /** @var $tenant \Tenancy\Identification\Contracts\Tenant */
         if ($name === config('tenancy.database.tenant-connection-name') &&
             $tenant = $this->environment->getTenant() &&
-            // Only invoke the database manager to (re-) create the connection.
-            // Otherwise just allow a pass through.
-            config("database.connections.$name.uuid") !== $tenant->getTenantKey()) {
-            $provider = $this->manager->__invoke($tenant, $name);
+            config("database.connections.$name.uuid") !== $tenant->getTenantKey() &&
+            $provider = $this->manager->__invoke($tenant, $name)) {
 
             $configuration = $provider->configure($tenant);
 
-            $configuration['uuid'] = $tenant->getTenantKey();
+            Arr::set($configuration, 'uuid', $tenant->getTenantKey());
 
             $this->events->dispatch(new Configuring($name, $configuration, $provider));
 
             config(["database.connections.$name" => $configuration]);
-
-            return $provider->connection();
         }
 
         return $this->resolver->connection($name);
