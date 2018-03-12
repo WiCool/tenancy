@@ -16,6 +16,7 @@ namespace Tenancy\Eloquent;
 
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\ConnectionResolverInterface;
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Arr;
 use Tenancy\Database\DatabaseResolver;
 use Tenancy\Database\Events\Drivers\Configuring;
@@ -30,21 +31,25 @@ class ConnectionResolver implements ConnectionResolverInterface
     /**
      * @var DatabaseResolver
      */
-    private $manager;
-    /**
-     * @var ConnectionResolverInterface
-     */
     private $resolver;
+    /**
+     * @var ConnectionResolverInterface|DatabaseManager
+     */
+    private $manager;
     /**
      * @var Dispatcher
      */
     private $events;
 
-    public function __construct(DatabaseResolver $manager, Environment $environment, $resolver, Dispatcher $events)
-    {
-        $this->manager     = $manager;
-        $this->environment = $environment;
+    public function __construct(
+        DatabaseResolver $resolver,
+        Environment $environment,
+        DatabaseManager $manager,
+        Dispatcher $events
+    ) {
         $this->resolver    = $resolver;
+        $this->environment = $environment;
+        $this->manager     = $manager;
         $this->events      = $events;
     }
 
@@ -60,7 +65,7 @@ class ConnectionResolver implements ConnectionResolverInterface
         if ($name === config('tenancy.database.tenant-connection-name') &&
             $tenant = $this->environment->getTenant() &&
             config("database.connections.$name.uuid") !== $tenant->getTenantKey() &&
-            $provider = $this->manager->__invoke($tenant, $name)) {
+            $provider = $this->resolver->__invoke($tenant, $name)) {
 
             $configuration = $provider->configure($tenant);
 
@@ -69,9 +74,11 @@ class ConnectionResolver implements ConnectionResolverInterface
             $this->events->dispatch(new Configuring($name, $configuration, $provider));
 
             config(["database.connections.$name" => $configuration]);
+
+            $this->manager->purge($name);
         }
 
-        return $this->resolver->connection($name);
+        return $this->manager->connection($name);
     }
 
     /**
@@ -85,7 +92,7 @@ class ConnectionResolver implements ConnectionResolverInterface
             return config('tenancy.database.tenant-connection-name');
         }
 
-        return $this->resolver->getDefaultConnection();
+        return $this->manager->getDefaultConnection();
     }
 
     /**
@@ -96,6 +103,11 @@ class ConnectionResolver implements ConnectionResolverInterface
      */
     public function setDefaultConnection($name)
     {
-        return $this->resolver->setDefaultConnection($name);
+        return $this->manager->setDefaultConnection($name);
+    }
+
+    public function __call($name, $arguments)
+    {
+        return call_user_func_array([$this->manager, $name], $arguments);
     }
 }

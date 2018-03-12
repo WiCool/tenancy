@@ -14,7 +14,6 @@
 
 namespace Tenancy\Database\Contracts;
 
-use Illuminate\Database\ConnectionInterface;
 use Tenancy\Identification\Contracts\Tenant;
 
 interface ProvidesDatabaseDriver
@@ -24,5 +23,4 @@ interface ProvidesDatabaseDriver
      * @return array
      */
     public function configure(Tenant $tenant): array;
-    public function connection(): ConnectionInterface;
 }

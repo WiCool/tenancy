@@ -16,7 +16,6 @@ namespace Tenancy\Tests\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 use Tenancy\Eloquent\ConnectionResolver;
-use Tenancy\Tests\Mocks\Tenant;
 use Tenancy\Tests\TestCase;
 
 class ConnectionResolverTest extends TestCase
@@ -28,16 +27,37 @@ class ConnectionResolverTest extends TestCase
     {
         $this->assertInstanceOf(ConnectionResolver::class, Model::getConnectionResolver());
     }
+
     /**
      * @test
      */
-    public function resolves_tenant_connection_when_defaulted()
+    public function overrides_global_db()
+    {
+        $this->assertInstanceOf(ConnectionResolver::class, $this->app['db']);
+    }
+    /**
+     * @test
+     */
+    public function resolves_tenant_model_connection_when_defaulted()
     {
         config(['tenancy.database.models-default-to-tenant-connection' => true]);
 
         $this->assertEquals(
             config('tenancy.database.tenant-connection-name'),
             $this->tenant()->getConnectionName()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function resolves_tenant_db_connection_when_defaulted()
+    {
+        config(['tenancy.database.models-default-to-tenant-connection' => true]);
+
+        $this->assertEquals(
+            config('tenancy.database.tenant-connection-name'),
+            $this->app['db']->getDefaultConnection()
         );
     }
 }

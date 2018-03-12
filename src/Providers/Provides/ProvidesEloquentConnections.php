@@ -21,8 +21,8 @@ trait ProvidesEloquentConnections
 {
     protected function bootProvidesEloquentConnections()
     {
-        $this->app->extend('db', function ($resolver) {
-            $resolver = $this->app->makeWith(ConnectionResolver::class, compact('resolver'));
+        $this->app->extend('db', function ($manager) {
+            $resolver = $this->app->makeWith(ConnectionResolver::class, compact('manager'));
 
             Model::setConnectionResolver($resolver);
 
