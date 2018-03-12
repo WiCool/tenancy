@@ -32,10 +32,10 @@ class Configuring
      */
     public $provider;
 
-    public function __construct(string $name, array $configuration, ProvidesDatabaseDriver $provider)
+    public function __construct(string $name, array &$configuration, ProvidesDatabaseDriver $provider)
     {
         $this->name = $name;
-        $this->configuration = $configuration;
+        $this->configuration = &$configuration;
         $this->provider = $provider;
     }
 }

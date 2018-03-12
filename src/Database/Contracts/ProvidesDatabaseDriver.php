@@ -19,6 +19,10 @@ use Tenancy\Identification\Contracts\Tenant;
 
 interface ProvidesDatabaseDriver
 {
-    public function configure(Tenant $tenant);
+    /**
+     * @param Tenant $tenant
+     * @return array
+     */
+    public function configure(Tenant $tenant): array;
     public function connection(): ConnectionInterface;
 }
