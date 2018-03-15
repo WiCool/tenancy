@@ -44,7 +44,7 @@ class ConnectionResolverTest extends TestCase
 
         $this->assertEquals(
             config('tenancy.database.tenant-connection-name'),
-            $this->tenant()->getConnectionName()
+            $this->tenant()->getConnection()->getName()
         );
     }
 
