@@ -32,7 +32,7 @@
     ],
     "scripts": {
         "test": [
-            "vendor/bin/phpunit --process-isolation"
+            "vendor/bin/phpunit"
         ]
     },
     "extra": {
