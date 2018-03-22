@@ -18,5 +18,5 @@ use Tenancy\Identification\Contracts\Tenant;
 
 interface ResolvesConnections
 {
-    public function __invoke(Tenant $tenant): ?ProvidesDatabaseDriver;
+    public function __invoke(Tenant $tenant): ?ProvidesDatabase;
 }

@@ -16,7 +16,7 @@ namespace Tenancy\Database\Contracts;
 
 use Tenancy\Identification\Contracts\Tenant;
 
-interface ProvidesDatabaseDriver
+interface ProvidesDatabase
 {
     /**
      * @param Tenant $tenant
