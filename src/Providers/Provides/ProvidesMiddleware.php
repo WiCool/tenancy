@@ -24,7 +24,7 @@ trait ProvidesMiddleware
         'tenancy.identification.eager' => EagerIdentification::class,
     ];
 
-    protected function bootProvidesMiddleware()
+    protected function registerProvidesMiddleware()
     {
         /** @var Kernel $kernel */
         $kernel = $this->app->make(Kernel::class);

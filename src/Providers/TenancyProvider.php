@@ -22,6 +22,7 @@ use Tenancy\Identification\TenantResolver;
 class TenancyProvider extends ServiceProvider
 {
     use Provides\ProvidesConfig,
+        Provides\ProvidesListeners,
         Provides\ProvidesMiddleware,
         Provides\ProvidesMigrations,
         Provides\ProvidesServices,
@@ -36,7 +37,26 @@ class TenancyProvider extends ServiceProvider
 
     public function register()
     {
+        $this->registerTenantTraits();
+    }
+
+    public function boot()
+    {
         $this->bootTenantTraits();
+    }
+
+    protected function registerTenantTraits()
+    {
+        $class = static::class;
+
+        foreach (class_uses_recursive($class) as $trait) {
+            if (method_exists($class, $method = 'register'.class_basename($trait))) {
+                call_user_func([$this, $method]);
+            }
+            if (method_exists($class, $method = 'servicesOf'.class_basename($trait))) {
+                $this->providesServices = array_merge($this->providesServices, call_user_func([$this, $method]));
+            }
+        }
     }
 
     protected function bootTenantTraits()
@@ -46,9 +66,6 @@ class TenancyProvider extends ServiceProvider
         foreach (class_uses_recursive($class) as $trait) {
             if (method_exists($class, $method = 'boot'.class_basename($trait))) {
                 call_user_func([$this, $method]);
-            }
-            if (method_exists($class, $method = 'servicesOf'.class_basename($trait))) {
-                $this->providesServices = array_merge($this->providesServices, call_user_func([$this, $method]));
             }
         }
     }

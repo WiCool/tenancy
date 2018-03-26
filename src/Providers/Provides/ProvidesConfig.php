@@ -20,7 +20,7 @@ trait ProvidesConfig
         __DIR__.'/../../../resources/config/tenancy.php' => 'tenancy'
     ];
 
-    protected function bootProvidesConfig()
+    protected function registerProvidesConfig()
     {
         foreach ($this->configs as $path => $key) {
             $this->mergeConfigFrom(

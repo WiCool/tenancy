@@ -20,7 +20,7 @@ trait ProvidesMigrations
 
     ];
 
-    protected function bootProvidesMigrations()
+    protected function registerProvidesMigrations()
     {
         $this->loadMigrationsFrom($this->paths);
     }

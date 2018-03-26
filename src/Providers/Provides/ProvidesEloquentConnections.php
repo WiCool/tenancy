@@ -19,7 +19,7 @@ use Tenancy\Eloquent\ConnectionResolver;
 
 trait ProvidesEloquentConnections
 {
-    protected function bootProvidesEloquentConnections()
+    protected function registerProvidesEloquentConnections()
     {
         $this->app->extend('db', function ($manager) {
             $resolver = $this->app->makeWith(ConnectionResolver::class, compact('manager'));
