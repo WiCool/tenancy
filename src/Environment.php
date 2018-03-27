@@ -15,6 +15,7 @@
 namespace Tenancy;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Database\Connection;
 use Tenancy\Identification\Contracts\Tenant;
 use Tenancy\Identification\Contracts\ResolvesTenants;
 
@@ -86,5 +87,19 @@ class Environment
         $this->identified = $identified;
 
         return $this;
+    }
+
+    public function tenantConnection(): ?Connection
+    {
+        return $this->app['db']->connection(
+            config('tenancy.database.tenant-connection-name')
+        );
+    }
+
+    public function systemConnection(): ?Connection
+    {
+        return $this->app['db']->connection(
+            config('tenancy.database.system-connection-name') ?? config('database.default')
+        );
     }
 }

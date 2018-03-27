@@ -29,4 +29,16 @@ interface ProvidesDatabase
      * @return string[] Array of SQL statements.
      */
     public function create(Tenant $tenant): array;
+
+    /**
+     * @param Tenant $tenant
+     * @return string[] Array of SQL statements.
+     */
+    public function update(Tenant $tenant): array;
+
+    /**
+     * @param Tenant $tenant
+     * @return string[] Array of SQL statements.
+     */
+    public function delete(Tenant $tenant): array;
 }

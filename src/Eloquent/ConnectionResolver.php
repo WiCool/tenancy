@@ -61,7 +61,6 @@ class ConnectionResolver implements ConnectionResolverInterface
      */
     public function connection($name = null)
     {
-        dump($name);
         /** @var $tenant \Tenancy\Identification\Contracts\Tenant */
         if ($name === config('tenancy.database.tenant-connection-name') &&
             $tenant = $this->environment->getTenant() &&
