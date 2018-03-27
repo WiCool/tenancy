@@ -89,14 +89,14 @@ class Environment
         return $this;
     }
 
-    public function tenantConnection(): ?Connection
+    public function getTenantConnection(): ?Connection
     {
         return $this->app['db']->connection(
             config('tenancy.database.tenant-connection-name')
         );
     }
 
-    public function systemConnection(): ?Connection
+    public function getSystemConnection(): ?Connection
     {
         return $this->app['db']->connection(
             config('tenancy.database.system-connection-name') ?? config('database.default')

@@ -24,26 +24,24 @@ abstract class DatabaseMutation
      */
     protected $driver;
     /**
-     * @var Environment
+     * @var \Illuminate\Database\ConnectionInterface
      */
-    protected $environment;
+    protected $connection;
 
     public function __construct(DatabaseResolver $resolver, Environment $environment)
     {
         $this->driver = $resolver->__invoke($environment->getTenant());
-        $this->environment = $environment;
+        $this->connection = $environment->getSystemConnection();
     }
 
     protected function processRawStatements(array $statements = null)
     {
-        $db = $this->environment->systemConnection();
-
-        $db->beginTransaction();
+        $this->connection->beginTransaction();
 
         foreach ($statements as $statement) {
-            $db->statement($statement);
+            $this->connection->statement($statement);
         }
 
-        $db->commit();
+        $this->connection->commit();
     }
 }
