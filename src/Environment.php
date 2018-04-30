@@ -16,16 +16,24 @@ namespace Tenancy;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Database\Connection;
+use Illuminate\Support\Traits\Macroable;
 use Tenancy\Identification\Contracts\Tenant;
 use Tenancy\Identification\Contracts\ResolvesTenants;
 
 class Environment
 {
+    use Macroable;
+
     /**
      * @var Tenant
      */
     protected $tenant;
 
+    /**
+     * Whether the tenant has been identified previously.
+     *
+     * @var bool
+     */
     protected $identified = false;
 
     /**
@@ -99,7 +107,9 @@ class Environment
     public function getSystemConnection(): ?Connection
     {
         return $this->app['db']->connection(
-            config('tenancy.database.system-connection-name') ?? config('database.default')
+            optional($this->getTenant()->getManagingSystemConnection()) ??
+            config('tenancy.database.system-connection-name') ??
+            config('database.default')
         );
     }
 }

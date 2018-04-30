@@ -44,4 +44,11 @@ interface Tenant
      * @return string
      */
     public function getTenantIdentifier(): string;
+
+    /**
+     * Allows overriding the system connection used for the tenant.
+     *
+     * @return null|string
+     */
+    public function getManagingSystemConnection(): ?string;
 }

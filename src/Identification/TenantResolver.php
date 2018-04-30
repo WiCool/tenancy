@@ -15,12 +15,15 @@
 namespace Tenancy\Identification;
 
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Support\Traits\Macroable;
 use Tenancy\Identification\Contracts\Tenant;
 use Tenancy\Identification\Contracts\ResolvesTenants;
 use Tenancy\Identification\Support\TenantModelCollection;
 
 class TenantResolver implements ResolvesTenants
 {
+    use Macroable;
+
     /**
      * @var Dispatcher
      */

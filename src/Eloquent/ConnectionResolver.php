@@ -18,12 +18,15 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Traits\Macroable;
 use Tenancy\Database\DatabaseResolver;
 use Tenancy\Database\Events\Drivers\Configuring;
 use Tenancy\Environment;
 
 class ConnectionResolver implements ConnectionResolverInterface
 {
+    use Macroable;
+
     /**
      * @var Environment
      */

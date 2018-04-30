@@ -15,12 +15,15 @@
 namespace Tenancy\Database;
 
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Support\Traits\Macroable;
 use Tenancy\Database\Contracts\ProvidesDatabase;
 use Tenancy\Database\Contracts\ResolvesConnections;
 use Tenancy\Identification\Contracts\Tenant;
 
 class DatabaseResolver implements ResolvesConnections
 {
+    use Macroable;
+
     /**
      * @var Dispatcher
      */
