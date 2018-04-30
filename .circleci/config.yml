@@ -15,22 +15,14 @@ references:
             - run: composer install -n --prefer-dist --no-progress -o
             - run: ./vendor/bin/phpunit
 
-    environment: &environment
-        - DB_DATABASE: testing
-        - DB_USERNAME: testing
-        - DB_PASSWORD: testing
-        - APP_KEY: deela5kinohw0haekoothahSh8eexach
-
 jobs:
     "php-7.1":
         docker:
             - image: php:7.1
-              environment: *environment
         <<: *steps
     "php-7.2":
         docker:
             - image: php:7.2
-              environment: *environment
         <<: *steps
 
 

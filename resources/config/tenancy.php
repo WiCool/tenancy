@@ -36,12 +36,17 @@ return [
          * There you can store tables that you like to share between your tenants. In case you wish
          * to override this connection please specify.
          */
-        'system-connection-name' => env('TENANCY_SYSTEM_CONNECTION_NAME'),
+        'system-connection-name' => env('TENANCY_SYSTEM_CONNECTION_NAME', 'system'),
 
         /**
          * Enabling this setting will force all Eloquent models to use the tenant connection by default.
          */
         'models-default-to-tenant-connection' => env('TENANCY_ELOQUENT_USES_TENANT_CONNECTION', false),
+
+        /**
+         * Enabling this setting will force all Eloquent models to use the system connection by default.
+         */
+        'models-default-to-system-connection' => env('TENANCY_ELOQUENT_USES_SYSTEM_CONNECTION', false),
 
         /**
          * Automatic tenant database handling.

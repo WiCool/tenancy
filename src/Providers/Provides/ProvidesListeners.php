@@ -15,6 +15,7 @@
 namespace Tenancy\Providers\Provides;
 
 use Illuminate\Support\Facades\Event;
+use Tenancy\Eloquent\Listeners as Eloquent;
 use Tenancy\Tenant\Events as TenantEvents;
 use Tenancy\Database\Listeners as Database;
 
@@ -42,7 +43,9 @@ trait ProvidesListeners
      *
      * @var array
      */
-    protected $subscribe = [];
+    protected $subscribe = [
+        Eloquent\OverridesModelConnections::class,
+    ];
 
     public function bootProvidesListeners()
     {

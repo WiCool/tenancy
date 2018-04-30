@@ -55,4 +55,14 @@ trait AllowsTenantIdentification
     {
         return $this->getConnectionName().'.'.$this->getTable();
     }
+
+    /**
+     * Allows overriding the system connection used for the tenant.
+     *
+     * @return null|string
+     */
+    public function getManagingSystemConnection(): ?string
+    {
+        return null;
+    }
 }

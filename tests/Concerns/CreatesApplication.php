@@ -79,6 +79,8 @@ trait CreatesApplication
 
         $this->environment = $this->app->make(Environment::class);
         $this->events = $this->app->make(Dispatcher::class);
+
+        config(['database.connections.tenant' => config('database.connections.' . config('database.default'), [])]);
     }
 
     protected function tearDownTenancy()

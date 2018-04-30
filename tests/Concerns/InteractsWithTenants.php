@@ -20,6 +20,6 @@ trait InteractsWithTenants
 {
     protected function tenant(): Tenant
     {
-        return factory(Tenant::class)->create();
+        return factory(Tenant::class)->make();
     }
 }
